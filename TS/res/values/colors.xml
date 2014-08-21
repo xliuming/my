@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="ts_dialog_btn_nor">#00000000</drawable>
+    <drawable name="ts_dialog_btn_pre">#ff282a2b</drawable>
+    
+	<color name="ts_white">#ffffffff</color>
+	<color name="ts_gray_press">#fff2f2f2</color>
+	<color name="ts_transparent">#00000000</color>
+	<color name="ts_lv_tv_color">#ff353535</color>
+	<color name="ts_lv_title_color">#ff999999</color>
+	<color name="ts_lv_item_selector">#f7fcff</color>
+	<color name="ts_lv_item_divider">#ffd9d9da</color>
+	<color name="ts_black">#ff000000</color>
+	<color name="ts_gray">#ff898989</color>
+	<color name="ts_tab_color">#ff222222</color>
+	<color name="ts_tab_selected_color">#ff3c647a</color>
+</resources>

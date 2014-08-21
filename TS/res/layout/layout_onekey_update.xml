@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btn_update_state"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:background="@drawable/ts_btn_stroke2"
+            android:text="XX状态"
+            android:textColor="@color/ts_white"
+            android:textSize="30dip" />
+
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/ts_btn_stroke4_bg_white"
+            android:text="异常报告"
+            android:textColor="@color/ts_black"
+            
+            android:textSize="20dip" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="30dp"
+        android:textSize="30dp"
+        android:text="Dear W ,您好！" />
+
+</RelativeLayout>
