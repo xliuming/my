@@ -42,12 +42,14 @@
                 android:background="#ffffff"
                 android:hint="@string/ts_please_input_user"
                 android:singleLine="true"
+                android:textColor="@color/dark_gray"
+                android:maxLength="20"
                  />
 
             <ImageView
                 android:id="@+id/iv_clear_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="21dip"
+                android:layout_height="21dip"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dip"
                 android:background="@drawable/ts_clear_search"
@@ -71,12 +73,15 @@
                 android:background="#ffffff"
                 android:hint="@string/ts_please_input_pw"
                 android:singleLine="true"
+                android:password="true"
+                android:textColor="@color/dark_gray"
+                android:maxLength="20"
                  />
 
             <ImageView
                 android:id="@+id/iv_clear_pw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="21dip"
+                android:layout_height="21dip"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dip"
                 android:background="@drawable/ts_clear_search"
@@ -90,7 +95,10 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="10dip"
               android:layout_gravity="right"
-              android:text="@string/remmber_pw" />
+              android:text="@string/remmber_pw"
+              android:textColor="@color/dark_gray" 
+
+             />
 
         <Button
             android:id="@+id/btn_login"
@@ -106,7 +114,6 @@
             android:layout_width="match_parent"
             android:layout_height="48dip"
             android:layout_marginTop="10dip"
-            
             android:text="@string/ts_login"
             android:textColor="#ffffff"
             android:textSize="15sp" />

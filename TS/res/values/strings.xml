@@ -9,6 +9,11 @@
 	<string name="remmber_pw">记住密码</string>
 	<string name="confirm">确定</string>
 	<string name="take">拍</string>
+	<string name="init_date">您于2008年10月26日加入车队</string>
+    <string name="mileage">总里程(公里)</string>
+    <string name="fuel_consumption">平均油耗（升/公里）</string>
+    <string name="user_and_pw_null">账号和密码不能为空</string>
+    <string name="url">http://192.168.1.104:8080/</string>
 	
 
 </resources>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.shaobao.ts.view.MagicScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/magic_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:scrollbars="none" >
+
+    
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+  		<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bgc_lightgray"
+            android:orientation="horizontal"
+       		 android:gravity="center_horizontal"
+            android:padding="15dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/init_date"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+ 			 
+            
+            
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bgc_darkgray"
+            android:orientation="vertical"
+            android:padding="15dp" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mileage"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <com.shaobao.ts.view.MagicTextView
+                android:id="@+id/income_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="0.00"
+                android:textColor="@color/white"
+                android:textSize="60sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/fuel_consumption"
+            android:textColor="@color/gray"
+            android:textSize="20sp" />
+
+        <com.shaobao.ts.view.MagicTextView
+            android:id="@+id/total_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="0.00"
+            android:textColor="@color/dark_gray"
+            android:textSize="45sp" />
+
+        <LinearLayout
+            android:id="@+id/income_total_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/light_gray" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                 android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="test"
+                    android:textColor="@color/gray"
+                    android:textSize="20sp" />
+
+                <com.shaobao.ts.view.MagicTextView
+                    android:id="@+id/income_total_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="0.0"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                 android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="test"
+                    android:textColor="@color/gray"
+                    android:textSize="20sp" />
+
+                <com.shaobao.ts.view.MagicTextView
+                    android:id="@+id/income_sevdays_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="0.00"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="30sp" />
+            </LinearLayout>
+        </LinearLayout>
+		
+      
+
+      
+
+     
+
+    </LinearLayout>
+
+</com.shaobao.ts.view.MagicScrollView>

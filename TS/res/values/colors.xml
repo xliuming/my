@@ -14,4 +14,12 @@
 	<color name="ts_gray">#ff898989</color>
 	<color name="ts_tab_color">#ff222222</color>
 	<color name="ts_tab_selected_color">#ff3c647a</color>
+
+    <color name="light_black">#1A1A1A</color>
+    <color name="white">#FFFFFF</color>
+    <color name="oriange">#ff6633</color>
+    <color name="gray">#999999</color>
+    <color name="light_gray">#E5E5E5</color>
+    
+    <color name="dark_gray">#3C3C3C</color>
 </resources>
