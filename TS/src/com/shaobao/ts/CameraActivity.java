@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.security.InvalidAlgorithmParameterException;
 
+import com.shaobao.ts.view.InfoFlag;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
@@ -39,6 +43,8 @@ import android.widget.LinearLayout;
 	// 继承surfaceView的自定义view 用于存放照相的图片
 	private CameraView cv = null;
 	private ECameraStatus mCameraStatus = ECameraStatus.INVALID;
+	private String orderNumber;
+	private	Intent resultIntent = new Intent();
 	public enum ECameraStatus
 	{
 		INVALID(0),
@@ -87,18 +93,20 @@ import android.widget.LinearLayout;
 			
 			// 主要就是将图片转化成drawable，设置为固定区域的背景（展示图片），当然也可以直接在布局文件里放一个surfaceView供使用。
 			ByteArrayInputStream bais = new ByteArrayInputStream(data);
-			Drawable d = BitmapDrawable.createFromStream(bais, Environment
-					.getExternalStorageDirectory().getAbsolutePath()
-					+ "/img.jpeg");
+//			Drawable d = BitmapDrawable.createFromStream(bais, Environment
+//					.getExternalStorageDirectory().getAbsolutePath()
+//					+ "/img.jpeg");
+		
+			resultIntent.putExtra(InfoFlag.PICTURE_DATA, data);
+			setResult(InfoFlag.RESULT_CODE_CAMERA, resultIntent);
 //			l.setBackgroundDrawable(d);
-			btn_opration.setText(R.string.confirm);;
+			btn_opration.setText(R.string.confirm);
 			mCameraStatus = ECameraStatus.SHOWPICTURE;
 		
 		}
 
 	};
 
-	// 按钮 布局等定义，不作赘述
 	Button btn_opration = null;
 //	Button btn2 = null;
 	LinearLayout l = null;
@@ -126,8 +134,32 @@ import android.widget.LinearLayout;
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT);
 		l.addView(cv, params);
+		initData();
 	}
 
+	private void initData()
+	{
+		Intent intent = getIntent();
+		if (intent!= null)
+		{
+			orderNumber = intent.getStringExtra(InfoFlag.ORDER_NUMBER);
+			String status  = intent.getStringExtra(InfoFlag.ORDER_STATUS);
+			
+			System.out.println("camera_orderNumber:" + orderNumber);
+			if (orderNumber != null && !orderNumber.equals(""))
+			{
+				resultIntent.putExtra(InfoFlag.ORDER_NUMBER, orderNumber);
+				
+			}
+			if (status != null && !status.equals(""))
+			{
+				resultIntent.putExtra(InfoFlag.ORDER_STATUS, status);
+				
+			}
+
+			
+		}
+	}
 	//主要的surfaceView，负责展示预览图片，camera的开关
 	class CameraView extends SurfaceView {
 
@@ -261,6 +293,7 @@ import android.widget.LinearLayout;
 				  
 			}else if(mCameraStatus == ECameraStatus.SHOWPICTURE)
 			{
+				finish();
 //					l.setBackground(null);
 				//l.setBackgroundDrawable(null);
 //				l.getBackground().setVisible(false, false);
@@ -298,4 +331,5 @@ import android.widget.LinearLayout;
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 }

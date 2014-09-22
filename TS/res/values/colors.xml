@@ -6,6 +6,7 @@
 	<color name="ts_white">#ffffffff</color>
 	<color name="ts_gray_press">#fff2f2f2</color>
 	<color name="ts_transparent">#00000000</color>
+	<color name="ts_half_transparent">#e0000000</color>
 	<color name="ts_lv_tv_color">#ff353535</color>
 	<color name="ts_lv_title_color">#ff999999</color>
 	<color name="ts_lv_item_selector">#f7fcff</color>
@@ -22,4 +23,14 @@
     <color name="light_gray">#E5E5E5</color>
     
     <color name="dark_gray">#3C3C3C</color>
+    
+    
+     <color name="ts_half_light_blue">#6081c1ea</color>
+    <color name="ts_half_dark_blue">#605296d7</color>
+    <color name="ts_light_blue">#81c1ea</color>
+    <color name="ts_dark_blue">#5296d7</color>
+    <color name="ts_mid_blue">#62aae0</color>
+     <color name="ts_light_half_blue">#e081c1ea</color>
+  
+    <color name="ts_red">#FF0000</color>
 </resources>

@@ -1,0 +1,88 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="60dip"
+    android:descendantFocusability="blocksDescendants"
+    
+    >
+	<TextView 
+	   android:id="@+id/tv_number"
+       android:layout_width="60dip"
+   	   android:layout_height="60dip"
+   	   android:gravity="center"
+   	  	android:layout_centerHorizontal="true"
+   	   android:textSize="25sp"
+   	   android:layout_alignParentLeft="true"
+   	   android:textColor="@color/ts_black"
+   	   android:text="7"
+   	   android:textStyle="italic"
+       />
+     
+     
+	<LinearLayout 
+	    android:id="@+id/order_layout"
+	      android:layout_width="wrap_content"
+   	   	android:layout_height="wrap_content"
+   	   	android:layout_alignParentTop="true"
+   	   	android:layout_toRightOf="@id/tv_number"
+		
+	    android:orientation="horizontal" 
+	    >
+	    
+	    <TextView 
+       android:layout_width="wrap_content"
+   	   android:layout_height="wrap_content"
+   	   android:text="@string/ts_order_number"
+   	   android:gravity="center_horizontal"
+   	   android:textSize="25sp"
+   	   android:textColor="@color/ts_black"
+   	   
+       />
+    
+       <TextView 
+        android:id="@+id/tv_order_number"
+        android:layout_width="wrap_content"
+        android:gravity="center_horizontal"
+    	android:layout_height="wrap_content"
+    	android:textSize="25sp"
+    	android:text="text"
+    	android:textColor="@color/ts_black"
+        />
+	    
+	    
+	</LinearLayout>
+	<LinearLayout 
+	    android:id="@+id/status_layout"
+	      android:layout_width="wrap_content"
+   	   	android:layout_height="wrap_content"
+   	   	android:orientation="horizontal"
+   	   	android:layout_toRightOf="@id/tv_number"
+   	   	android:layout_alignParentBottom="true"   
+	    >
+	    
+        <TextView 
+	      
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:gravity="center_vertical"
+	   	   android:text="@string/ts_cur_status" 
+	   	   android:textSize="25sp"
+	   	   android:textColor="@color/ts_gray"
+       />
+  
+        <TextView 
+             android:id="@+id/tv_order_status"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+             android:gravity="center_vertical" 
+          	android:textColor="@color/ts_gray"
+             android:textSize="25sp"
+             android:text="status_test"/> 
+	</LinearLayout>
+       <RadioButton android:id="@+id/rb_radioButton" 
+           android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+               android:layout_marginRight="14dp"/>
+</RelativeLayout>

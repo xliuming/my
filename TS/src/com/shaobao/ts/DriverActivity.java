@@ -11,15 +11,19 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //新版本中TabActivity过时了，使用一下的方式
 public class DriverActivity extends  ActivityGroup{
 
 	private TabHost myTabHost;
     public static int mWinheight;
-	@Override
+   
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_driver); 
@@ -31,20 +35,21 @@ public class DriverActivity extends  ActivityGroup{
 		myTabHost.setBackgroundColor(Color.argb(150, 22, 70, 150));
 		 View oneKeyUpdateView = (View) LayoutInflater.from(this).inflate(R.layout.tab_widget_item, null);  
 	        TextView oKUTextView = (TextView) oneKeyUpdateView.findViewById(R.id.tab_label);  
-	        oKUTextView.setText("一键更新"); 
+	        oKUTextView.setText(R.string.ts_cur_order); 
 	        oKUTextView.setTextSize(30);
 	        View historyDataView = (View) LayoutInflater.from(this).inflate(R.layout.tab_widget_item, null);  
 	        TextView hDTextView = (TextView) historyDataView.findViewById(R.id.tab_label);  
-	        hDTextView.setText("历史数据"); 
+	        hDTextView.setText(R.string.ts_history_data); 
 	        hDTextView.setTextSize(30);
 		
 		myTabHost.addTab(myTabHost.newTabSpec("oneKey").setIndicator(oneKeyUpdateView).setContent(new Intent(this , FragmentBottomTabPager.class)));
 		myTabHost.addTab(myTabHost.newTabSpec("history").setIndicator(historyDataView).setContent(R.id.tab2));
 //		myTabHost.addTab(myTabHost.newTabSpec("百度").setIndicator("百度",getResources().getDrawable(R.drawable.ic_launcher)).setContent(R.id.tab3));
 
+		
 	}
 
-
+	
 		
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

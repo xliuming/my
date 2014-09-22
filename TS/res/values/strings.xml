@@ -8,12 +8,56 @@
 	<string name="ts_login">登陆</string>
 	<string name="remmber_pw">记住密码</string>
 	<string name="confirm">确定</string>
+	<string name="ts_cancel">取消</string>
 	<string name="take">拍</string>
 	<string name="init_date">您于2008年10月26日加入车队</string>
     <string name="mileage">总里程(公里)</string>
     <string name="fuel_consumption">平均油耗（升/公里）</string>
     <string name="user_and_pw_null">账号和密码不能为空</string>
-    <string name="url">http://192.168.1.104:8080/</string>
+       <!--<string name="url">http://192.168.1.109:8080/</string>-->
+ <string name="url">https://113.106.148.42/</string> 
+ 	<string name="root_file_name">ts</string>
+ 	<string name="camera_file">picture</string>
+   
+    <string name="ts_verify_failed">验证失败！</string>
+    
+    <string name="one_key_refresh">更新状态</string>
+    <string name="ts_driver_fix">维修</string>
+    <string name="ts_driver_refuel">加油</string>
+	<string name="ts_driver_accident">事故</string>
+	<string name="ts_driver_other">其他</string>
 	
+	<string name="ts_input_new_pw">请输入新密码</string>
+	<string name="ts_confirm_new_pw">请确认新密码</string>
+	<string name="ts_change_pw">修改密码</string>
+	
+	<string name="confirm_change_status">确认更新到</string>
+	<string name="hint">提示</string>
+	<string name="ts_onfind_ft">未找到存储卡！</string>
+	
+	
+	
+	<string name="ts_cur_order">当前运单</string>
+	<string name="ts_history_data">历史数据</string>
+	<string name="ts_info">信息</string>
+	<string name="ts_exception">异常</string>
+	<string name="ts_bills">票据</string>
+	<string name="ts_set">设置</string>
+	
+	<string name="ts_sync_failed">信息同步异常！</string>
+	<string name="ts_change_pw_success">修改成功！</string>
+	
+	<string name="ts_change_pw_failed">密码修改失败！</string>
+	<string name="ts_change_status_failed">状态跟新失败！</string>
+	
+	
+	<string name="ts_verify">验证</string>
+	<string name="ts_net_exception">通信异常！</string>
+	<string name="ts_not_same">两次输入密码不一致!</string>
+	<string name="ts_cur_status">状态</string>
+	<string name="ts_order_number">编号</string>
+	<string name="ts_order_already_end">该订单已完成！</string>
+	<string name="ts_send_time">上传时间</string>
+	<string name="ts_take_and_send_picture">拍照上传</string>
 
 </resources>

@@ -6,8 +6,8 @@
        
         android:centerX="0.5"
         android:centerY="0.5"
-        android:endColor="@color/dark_gray"
-        android:startColor="#6C6C6C" />
+        android:endColor="@color/ts_dark_blue"
+        android:startColor="@color/ts_mid_blue" />
 
     <padding
         android:bottom="7dp"

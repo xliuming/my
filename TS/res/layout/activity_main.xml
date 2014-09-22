@@ -21,7 +21,7 @@
             android:layout_marginTop="20dip"
             android:gravity="center"
             android:text="@string/ts_title"
-            android:textColor="#45c01a"
+            android:textColor="@color/ts_dark_blue"
             android:textSize="50sp" />
 
     
@@ -113,8 +113,9 @@
             android:id="@+id/btn_test"
             android:layout_width="match_parent"
             android:layout_height="48dip"
+            android:background="@drawable/ts_btn_disenable"
             android:layout_marginTop="10dip"
-            android:text="@string/ts_login"
+            android:text="@string/ts_change_pw"
             android:textColor="#ffffff"
             android:textSize="15sp" />
         
