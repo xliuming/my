@@ -19,15 +19,13 @@
         android:layout_height="match_parent"
          >
 
-      
-
         <Button
             android:id="@+id/btn_opration"
             android:layout_width="80dip"
             android:layout_height="50dip"
               android:layout_alignParentBottom="true" 
               android:layout_centerHorizontal="true"
-            android:text="拍一下" />
+            android:text="@string/take" />
     </RelativeLayout>
 </FrameLayout>
 

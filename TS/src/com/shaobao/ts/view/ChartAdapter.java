@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.shaobao.ts.R;
 import com.shaobao.ts.R.drawable;
 import com.shaobao.ts.entity.PictureEntity;
+import com.shaobao.ts.util.DisplayUtil;
 
 
 public class ChartAdapter extends BaseAdapter
@@ -82,7 +83,7 @@ public class ChartAdapter extends BaseAdapter
                 	 holder.tvSendTime.setText(": " + pictureEntity.getStatus());
 				 }
                  
-                 Bitmap bt = BitmapFactory.decodeFile(pictureEntity.getPath());
+                 Bitmap bt = DisplayUtil.getimage(pictureEntity.getPath());
                  holder.ivPicture.setImageBitmap(bt);
                  
          }
@@ -100,7 +101,7 @@ public class ChartAdapter extends BaseAdapter
          
          return convertView;
      }
- 
+	
  
    public class ViewHolder
   {

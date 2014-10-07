@@ -1,15 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/white"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/fragment4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Large Text4444"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-   
-
+	 
+    <ScrollView  android:scrollbars="none" android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<LinearLayout
+	    android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" >
+       <!--  <LinearLayout android:orientation="vertical" android:layout_marginTop="20.0dip" style="@style/setting_box" android:background="@drawable/setting_back">
+          <RelativeLayout android:id="@+id/only_wifi_uploadLayout" android:layout_width="fill_parent" android:layout_height="45.0dip">
+                    <TextView android:text="only_wifi_syn" style="@style/setting_text" />
+                    <CheckBox android:id="@+id/only_wifi_upload_btn" android:button="@drawable/selector_setting_checkbox" android:layout_width="70.0dip" android:layout_height="31.0dip" android:layout_marginRight="10.0dip" android:layout_alignParentRight="true" android:layout_centerVertical="true"/>
+                </RelativeLayout>
+          <View style="@style/setting_xline" />
+            <RelativeLayout android:id="@+id/set_net_Layout" android:layout_width="fill_parent" android:layout_height="45.0dip">
+                    <TextView android:text="net_set" style="@style/setting_text" />
+                    <ImageView android:src="@drawable/setting_right" style="@style/setting_right_image" />
+            </RelativeLayout>
+           <View style="@style/setting_xline" />
+          <RelativeLayout android:layout_width="fill_parent" android:layout_height="45.0dip">
+                    <TextView android:id="@+id/space_info_label" android:text="native_file_size" style="@style/setting_text" />
+                    <TextView android:textColor="@color/ts_dark_blue" android:id="@+id/space_info_text" android:layout_width="wrap_content" android:layout_alignParentRight="true" style="@style/setting_text" />
+         </RelativeLayout>
+         <View style="@style/setting_xline" />
+            <RelativeLayout android:id="@+id/clear_local_cacheLayout" android:layout_width="fill_parent" android:layout_height="45.0dip">
+                    <TextView android:text="clear_native_file" style="@style/setting_text" />
+                    <ImageView android:src="@drawable/setting_right" style="@style/setting_right_image" />
+            </RelativeLayout>
+              <View style="@style/setting_xline" />
+            <RelativeLayout android:id="@+id/set_native_path" android:layout_width="fill_parent" android:layout_height="45.0dip">
+                    <TextView 
+                        android:id="@+id/lab_native_path" android:text="set_native_file_dir" style="@style/setting_text" />
+                      <TextView 
+                        android:id="@+id/show_native_path" android:text="fadsfa" style="@style/setting_text"
+                        android:layout_toRightOf="@+id/lab_native_path" android:textColor="@color/ts_dark_blue" />
+                    <ImageView android:src="@drawable/setting_right" style="@style/setting_right_image" />
+            </RelativeLayout>
+     </LinearLayout> -->
+      <LinearLayout android:orientation="vertical" android:layout_marginTop="20.0dip" style="@style/setting_box" android:background="@drawable/setting_back">
+                <RelativeLayout android:id="@+id/feedback" android:layout_width="fill_parent" android:layout_height="45.0dip">
+                    <TextView android:text="@string/ts_feedback" style="@style/setting_text" />
+                    <ImageView android:src="@drawable/setting_right" style="@style/setting_right_image" />
+                </RelativeLayout>
+                <View style="@style/setting_xline" />
+                <RelativeLayout android:id="@+id/check_update" android:layout_width="fill_parent" android:layout_height="45.0dip">
+                    <TextView android:text="@string/ts_check_update" style="@style/setting_text" />
+                    <ImageView android:src="@drawable/setting_right" style="@style/setting_right_image" />
+                </RelativeLayout>
+                
+                
+              
+              
+                <View style="@style/setting_xline" />
+                <RelativeLayout android:layout_width="fill_parent" android:layout_height="45.0dip">
+                    <TextView android:id="@+id/version_label" android:text="@string/ts_version_info" style="@style/setting_text" />
+                    <TextView android:textColor="@color/ts_dark_blue" android:id="@+id/version_info" android:layout_width="wrap_content" android:layout_alignParentRight="true" style="@style/setting_text" />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout android:orientation="vertical"  android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="10.0dip" android:layout_marginTop="29.0dip" android:layout_marginRight="10.0dip" android:layout_marginBottom="31.0dip">
+                <Button android:textSize="20.0sp" android:textColor="@color/white" android:layout_gravity="center" android:id="@+id/bt_exit" android:background="@drawable/selector_bt_exit_system" android:layout_width="fill_parent" android:layout_height="43.0dip" android:text="@string/ts_exit_programe" android:shadowColor="#ff333333" android:shadowDx="-1.5" android:shadowDy="-1.5" android:shadowRadius="1.0" />
+            </LinearLayout>
+            </LinearLayout>
+     </ScrollView>
 </LinearLayout>

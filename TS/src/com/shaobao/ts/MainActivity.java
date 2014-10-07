@@ -15,7 +15,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import u.aly.u;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +47,8 @@ import com.shaobao.ts.entity.UserEntity;
 import com.shaobao.ts.util.ChangePWUtil;
 import com.shaobao.ts.util.SSLSocketUtil;
 
+import com.umeng.analytics.MobclickAgent;
+
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 @SuppressLint("NewApi")
@@ -71,7 +75,7 @@ public class MainActivity extends Activity implements OnClickListener , OnChecke
 	private int timeout = 10 *1000;
 	
 	
-
+//	private UserEntity u;
 	
 	
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
@@ -84,9 +88,40 @@ public class MainActivity extends Activity implements OnClickListener , OnChecke
         	
         initView();
 
+//       System.out.println(getDeviceInfo(this)); 
+    }
+    public static String getDeviceInfo(Context context) {
+        try{
+          org.json.JSONObject json = new org.json.JSONObject();
+          android.telephony.TelephonyManager tm = (android.telephony.TelephonyManager) context
+              .getSystemService(Context.TELEPHONY_SERVICE);
+      
+          String device_id = tm.getDeviceId();
+          
+          android.net.wifi.WifiManager wifi = (android.net.wifi.WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+              
+          String mac = wifi.getConnectionInfo().getMacAddress();
+          json.put("mac", mac);
+          
+          if( TextUtils.isEmpty(device_id) ){
+            device_id = mac;
+          }
+          
+          if( TextUtils.isEmpty(device_id) ){
+            device_id = android.provider.Settings.Secure.getString(context.getContentResolver(),android.provider.Settings.Secure.ANDROID_ID);
+          }
+          
+          json.put("device_id", device_id);
+          
+          return json.toString();
+        }catch(Exception e){
+          e.printStackTrace();
+        }
+      return null;
     }
     private void initView()
     {
+    	
     	btLogin = (Button)findViewById(R.id.btn_login); 	
     	ivClearUserImageView =(ImageView)findViewById(R.id.iv_clear_user);
     	ivClearPWImageView =(ImageView)findViewById(R.id.iv_clear_pw);
@@ -247,6 +282,7 @@ public class MainActivity extends Activity implements OnClickListener , OnChecke
 		int id = arg0.getId();
 		switch (id) {
 		case R.id.btn_login:
+		
 			if (btLogin.isEnabled()) 
 			{
 				login(0);
@@ -263,12 +299,7 @@ public class MainActivity extends Activity implements OnClickListener , OnChecke
 			break;
 		case R.id.btn_test:
 			login(1);
-//			post();
-//			Intent cameraIntent = new Intent(this, ReportActivity.class);
-//			startActivity(cameraIntent);
-			
-//			Intent cameraIntent = new Intent(this, ChangePWActivity.class);
-//			startActivity(cameraIntent);
+
 			break;
 		
 		default:
@@ -409,8 +440,7 @@ public class MainActivity extends Activity implements OnClickListener , OnChecke
 		}
 		
 		if (type == 0) {
-			Intent service = new Intent(getApplicationContext(), OrderService.class);
-			startService(service);
+
 			Intent intent = new Intent(getApplicationContext(), DriverActivity.class);
 			startActivity(intent);
 			
@@ -481,7 +511,22 @@ public class MainActivity extends Activity implements OnClickListener , OnChecke
 		}
 		
 	}
-
+	@Override
+	protected void onResume() {
+		
+		// TODO Auto-generated method stub
+		super.onResume();
+		MobclickAgent.onResume(this);
+		
+	}
+	@Override
+	protected void onPause() {
+		
+		super.onPause();
+		MobclickAgent.onPause(this);
+	
+		// TODO Auto-generated method stub
+	}
 	
 
 }

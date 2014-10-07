@@ -64,6 +64,10 @@ public class ObtainOrderStatusThread extends Thread
 		super.run();
 		while(true)
 		{
+			if (OrderService.release)
+			{
+				return;
+			}
 			String result = con();
 			if (result != null)
 			{

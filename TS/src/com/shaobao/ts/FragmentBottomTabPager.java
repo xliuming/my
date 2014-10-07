@@ -29,6 +29,7 @@ import com.shaobao.ts.view.InfoFlag;
 import com.shaobao.ts.view.ExcFlag;
 import com.shaobao.ts.view.BillsFlag;
 import com.shaobao.ts.view.SetFlag;
+import com.umeng.analytics.MobclickAgent;
 
 import android.R.integer;
 import android.app.AlertDialog;
@@ -62,14 +63,14 @@ public class FragmentBottomTabPager extends FragmentActivity
 		 {
 
 	// 定义FragmentTabHost对象
-	
+	private static final String TAG = "FragmentBottomTabPager";
 	private FragmentTabHost mTabHost;
 	private RadioGroup mTabRg;
 	private ViewPager mViewPage;
 	private LinearLayout bt_refresh;
 	TabsAdapter mTabsAdapter;
 	private static int TIMEOUT = 10 * 1000;
-	private String OID = ""; 
+
 	private final Class[] fragments = { InfoFlag.class, ExcFlag.class,
 			BillsFlag.class, SetFlag.class };
 
@@ -79,12 +80,14 @@ public class FragmentBottomTabPager extends FragmentActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pager);
 		initView();
-//		obtainUserInfo();
+
 		if (savedInstanceState != null) {
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
 		}
 	}
 
+	
+	
 	private void initView() {
 
 		mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
@@ -111,18 +114,21 @@ public class FragmentBottomTabPager extends FragmentActivity
 				switch (checkedId) {
 				case R.id.tab_rb_1:
 					mTabHost.setCurrentTab(0);
+					Log.v(TAG, "mTabHost.setCurrentTab(0)");
 					break;
 				case R.id.tab_rb_2:
 					mTabHost.setCurrentTab(1);
-
+					Log.v(TAG, "mTabHost.setCurrentTab(1)");
 					break;
 				case R.id.tab_rb_3:
-
+					
 					mTabHost.setCurrentTab(2);
+					Log.v(TAG, "mTabHost.setCurrentTab(2)");
 					break;
 				case R.id.tab_rb_4:
 
 					mTabHost.setCurrentTab(3);
+					Log.v(TAG, "mTabHost.setCurrentTab(3)");
 					break;
 
 				default:
@@ -179,8 +185,8 @@ public class FragmentBottomTabPager extends FragmentActivity
 		{
 			String orderNumber = data.getExtras().getString(InfoFlag.ORDER_NUMBER);
 			String orderStatus = data.getExtras().getString(InfoFlag.ORDER_STATUS);
-			System.out.println("result-------"+ orderNumber);
-			byte[] pictureData = data.getExtras().getByteArray(InfoFlag.PICTURE_DATA);
+		
+
 			String pictureName = OrderService.userEntity.getName() +"_" +orderNumber+"_"+OrderService.userEntity.getToken()+ ".jpeg";
 			  DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			  String date = format.format(new Date());
@@ -188,100 +194,19 @@ public class FragmentBottomTabPager extends FragmentActivity
 			{
 				
 				
-				IOUtil.savePicture(getApplicationContext() , pictureData, pictureName, orderNumber, date, orderStatus);
-
+				IOUtil.savePicture(getApplicationContext() , CameraActivity.pData, pictureName, orderNumber, date, orderStatus);
+	
 			}else 
 			{
 				DisplayUtil.toast(this, getString(R.string.ts_onfind_ft));
 			}
 			
-			InfoFlag.sendPicture(getApplicationContext(),OrderService.userEntity.getToken(), OrderService.userEntity.getName() , orderNumber , pictureData,date , orderStatus);
-//			System.out.println("res:" +res);
+			InfoFlag.sendPicture(getApplicationContext(),OrderService.userEntity.getToken(), OrderService.userEntity.getName() , orderNumber , CameraActivity.pData,date , orderStatus);
+			System.out.println("result_pager");
 		
 		}
 	}
-	private void obtainUserInfo()
-	{
-		String url = getString(R.string.url) +"/mobile/sync";
-		List<NameValuePair> dataList = new ArrayList<NameValuePair>();  
-		dataList.add(new BasicNameValuePair("action", "MobileSync"));
-		dataList.add(new BasicNameValuePair("employeeId",OrderService.userEntity.getName()));
-		dataList.add(new BasicNameValuePair("token", OrderService.userEntity.getToken()));
-
-		
-		
-		HttpEntity entity = null;
-		try
-		{
-			entity = new UrlEncodedFormEntity(dataList);
-		} catch (UnsupportedEncodingException e)
-		{
-			// TODO Auto-generated catch block
-			
-			e.printStackTrace();
-		}  
-		
-		// TODO Auto-generated method stub
-		AsyncHttpClient client = new AsyncHttpClient();
-		SSLSocketFactory sslSocketFactory = SSLSocketUtil.createSSLSocketFactory();
-		client.setSSLSocketFactory(sslSocketFactory);
-		client.setTimeout(TIMEOUT);
-		client.post(this, url, entity, null,  new JsonHttpResponseHandler()
-		{
-			
-			@Override
-			public void onStart() 
-			{
-         
-//               
-				super.onStart();
-			}
-			
-			@Override
-			public void onSuccess(int statusCode, Header[] headers,
-					JSONObject response) {
-				// TODO Auto-generated method stub
-				super.onSuccess(statusCode, headers, response);
-				Log.v("test", "response:" + response.toString());
-				String result = getString(R.string.ts_sync_failed);
-
-				if (response != null) 
-				{
-					try {
-						result = response.getString("msg");
-						
-						if (result.equals("成功"))
-						{
-							JSONObject obj = response.getJSONObject("data");
-							JSONArray obj2 = obj.getJSONArray("orders");
-							JSONObject obj3 = obj2.getJSONObject(0);
-							OID = obj3.getString("id");
-							String status = obj3.getString("status");
-//							bt_refresh.setText(status );
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-			@Override
-			public void onFailure(int statusCode, Header[] headers,
-					String responseString, Throwable throwable) {
-				// TODO Auto-generated method stub
-				super.onFailure(statusCode, headers, responseString, throwable);
-				Toast.makeText(getApplicationContext(),getString(R.string.ts_sync_failed), 4*1000).show();
-			}
-			@Override
-			public void onFailure(int statusCode, Header[] headers,
-					Throwable throwable, JSONObject errorResponse) 
-			{
-				Toast.makeText(getApplicationContext(),getString(R.string.ts_sync_failed), 4*1000).show();
-				super.onFailure(statusCode, headers, throwable, errorResponse);
-			}
-		});
-                // Do something with the response
-	}
+	
 	
 	private void changeState(String orderID) 
 	{
@@ -496,6 +421,7 @@ public class FragmentBottomTabPager extends FragmentActivity
 
 		@Override
 		public Fragment getItem(int position) {
+//			System.out.println("_______________"+position+"______________");
 			TabInfo info = mTabs.get(position);
 			return Fragment.instantiate(mContext, info.clss.getName(),
 					info.args);
@@ -503,6 +429,7 @@ public class FragmentBottomTabPager extends FragmentActivity
 
 		@Override
 		public void onTabChanged(String tabId) {
+//			Log.v(TAG, "onTabChanged:" + tabId);
 			int position = mTabHost.getCurrentTab();
 			mViewPager.setCurrentItem(position);
 			((RadioButton) mTabRg.getChildAt(position)).setChecked(true);
@@ -514,7 +441,8 @@ public class FragmentBottomTabPager extends FragmentActivity
 		}
 
 		@Override
-		public void onPageSelected(int position) {
+		public void onPageSelected(int position) 
+		{
 			// Unfortunately when TabHost changes the current tab, it kindly
 			// also takes care of putting focus on it when not in touch mode.
 			// The jerk.
@@ -542,6 +470,16 @@ public class FragmentBottomTabPager extends FragmentActivity
 			return  true;
 			}  
 		return super.onKeyDown(keyCode, event);
+	}
+	public void onResume() {
+	    super.onResume();
+	    MobclickAgent.onResume(this);       //统计时长
+
+	}
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPause(this);
+	  
 	}
 	
 

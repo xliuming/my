@@ -7,6 +7,8 @@ import java.security.InvalidAlgorithmParameterException;
 
 import com.shaobao.ts.view.InfoFlag;
 
+import com.umeng.analytics.MobclickAgent;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -45,6 +47,7 @@ import android.widget.LinearLayout;
 	private ECameraStatus mCameraStatus = ECameraStatus.INVALID;
 	private String orderNumber;
 	private	Intent resultIntent = new Intent();
+	public static byte[] pData;
 	public enum ECameraStatus
 	{
 		INVALID(0),
@@ -86,19 +89,23 @@ import android.widget.LinearLayout;
 	
 	
 	// 回调用的picture，实现里边的onPictureTaken方法，其中byte[]数组即为照相后获取到的图片信息
-	private Camera.PictureCallback picture = new Camera.PictureCallback() {
+	private Camera.PictureCallback picture = new Camera.PictureCallback()
+	{
 
 		@Override
-		public void onPictureTaken(byte[] data, Camera camera) {
+		public void onPictureTaken(byte[] data, Camera camera)
+		{
 			
 			// 主要就是将图片转化成drawable，设置为固定区域的背景（展示图片），当然也可以直接在布局文件里放一个surfaceView供使用。
 			ByteArrayInputStream bais = new ByteArrayInputStream(data);
 //			Drawable d = BitmapDrawable.createFromStream(bais, Environment
 //					.getExternalStorageDirectory().getAbsolutePath()
 //					+ "/img.jpeg");
-		
-			resultIntent.putExtra(InfoFlag.PICTURE_DATA, data);
+			System.out.println("data_length:" + data.length);
+//			resultIntent.putExtra(InfoFlag.PICTURE_DATA, data);
+			pData = data;
 			setResult(InfoFlag.RESULT_CODE_CAMERA, resultIntent);
+			
 //			l.setBackgroundDrawable(d);
 			btn_opration.setText(R.string.confirm);
 			mCameraStatus = ECameraStatus.SHOWPICTURE;
@@ -111,6 +118,15 @@ import android.widget.LinearLayout;
 //	Button btn2 = null;
 	LinearLayout l = null;
 
+	@Override
+	public void onBackPressed() 
+	{
+		// TODO Auto-generated method stub
+		setResult(InfoFlag.RESULT_CODE_CANCEL, resultIntent);
+		super.onBackPressed();
+	}
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -246,7 +262,8 @@ import android.widget.LinearLayout;
 						//设置holder主要是用于surfaceView的图片的实时预览，以及获取图片等功能，可以理解为控制camera的操作..
 						camera.setPreviewDisplay(holder);
 
-					} catch (IOException e) {
+					} catch (IOException e) 
+					{
 						camera.release();
 						camera = null;
 						mCameraStatus = ECameraStatus.INVALID;
@@ -293,6 +310,8 @@ import android.widget.LinearLayout;
 				  
 			}else if(mCameraStatus == ECameraStatus.SHOWPICTURE)
 			{
+				
+				System.out.println("confirm");
 				finish();
 //					l.setBackground(null);
 				//l.setBackgroundDrawable(null);
@@ -304,6 +323,7 @@ import android.widget.LinearLayout;
 			
 		}
 	}
+
 
 	@Override
 	public boolean onTouch(View arg0, MotionEvent arg1) 
@@ -331,5 +351,19 @@ import android.widget.LinearLayout;
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		MobclickAgent.onResume(this);
+		
+	}
+	@Override
+	protected void onPause() {
+		
+		super.onPause();
+		MobclickAgent.onPause(this);
+	
+		// TODO Auto-generated method stub
+	}
 }

@@ -32,6 +32,7 @@ import com.shaobao.ts.util.CommonUtil;
 import com.shaobao.ts.util.DisplayUtil;
 import com.shaobao.ts.util.IOUtil;
 import com.shaobao.ts.util.SSLSocketUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import android.R.integer;
 import android.annotation.SuppressLint;
@@ -64,6 +65,7 @@ public class InfoFlag extends Fragment implements OnItemClickListener {
 	private static int TIMEOUT = 30 * 1000;
 	private static final String TAG= "InfoFlag";
 	public static final int RESULT_CODE_CAMERA = 1;
+	public static final int RESULT_CODE_CANCEL = 2;
 	public static final String PICTURE_DATA = "picture_data";
 	public static final String ORDER_NUMBER = "order_number";
 	public static final String ORDER_STATUS = "order_status";
@@ -72,7 +74,7 @@ public class InfoFlag extends Fragment implements OnItemClickListener {
 	private final Handler handler = new Handler();  
 	private ProgressDialog loginDialog = null;
 	private Context context;
-	  
+	private View rootView;
     private final Runnable task = new Runnable() {  
   
         @Override  
@@ -85,8 +87,8 @@ public class InfoFlag extends Fragment implements OnItemClickListener {
 //					ListView.notifyAll();
 					
 				}
-                handler.postDelayed(this, 3000);  
-//           
+                handler.postDelayed(this, 3000 );  
+               
         }  
     };  
 
@@ -94,6 +96,7 @@ public class InfoFlag extends Fragment implements OnItemClickListener {
 	public  OrderAdapter orderAdapter = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		obtainUserInfo();
 		super.onCreate(savedInstanceState);
 	}
 
@@ -102,13 +105,20 @@ public class InfoFlag extends Fragment implements OnItemClickListener {
 			Bundle savedInstanceState) 
 	{
 
+		Log.v(TAG, "onCreateView");
 		context = getActivity().getApplicationContext();
-		View parentView = inflater.inflate(R.layout.fragment1, container, false);
-		
+		if (rootView == null) {
+			rootView=inflater.inflate(R.layout.fragment1, container, false);
+		}
+
+		ViewGroup parent = (ViewGroup) rootView.getParent();  
+        if (parent != null) {  
+            parent.removeView(rootView);  
+        }   
 		handler.post(task);
-		initView(parentView);
+		initView(rootView);
 		
-		return parentView;
+		return rootView;
 		
 		// return super.onCreateView(, container, savedInstanceState);
 	}
@@ -119,6 +129,7 @@ public class InfoFlag extends Fragment implements OnItemClickListener {
     		  loginDialog =new ProgressDialog(getActivity(), R.style.ProgressDialog_Theme);
 		}
 		ListView = (ListView)parentView.findViewById(R.id.lv);
+		
 		ListView.setOnItemClickListener(this);
 		orderAdapter = new OrderAdapter(OrderService.orderEntitys, getActivity());
 		ListView.setAdapter(orderAdapter);
@@ -204,7 +215,7 @@ public class InfoFlag extends Fragment implements OnItemClickListener {
 							String status = obj.getString("status");
 							
 							OrderService.orderEntitys.get(index).setStatus(status);
-//							orderAdapter.notifyDataSetChanged();
+							
 							isTakePicture(status , orderID);
 						}
 					} catch (JSONException e) {
@@ -313,44 +324,29 @@ public class InfoFlag extends Fragment implements OnItemClickListener {
 			String orderNumber = data.getExtras().getString(ORDER_NUMBER);
 			String orderStatus = data.getExtras().getString(ORDER_STATUS);
 			System.out.println("result-------"+ orderNumber);
-			byte[] pictureData = data.getExtras().getByteArray(PICTURE_DATA);
+//			byte[] pictureData = data.getExtras().getByteArray(PICTURE_DATA);
 			String pictureName = OrderService.userEntity.getName() +"_" +orderNumber+"_"+OrderService.userEntity.getToken()+ ".jpeg";
 			  DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			  String date = format.format(new Date());
 			if (CommonUtil.getSDCardStatus() )
 			{
-				
-				
-				IOUtil.savePicture(context , pictureData, pictureName, orderNumber, date, orderStatus);
-//				if (savePicture(pictureData, pictureName)) 
-//				{
-//				
-//					
-//					
-//					
-//					
-//					
-//				}
+				IOUtil.savePicture(context , CameraActivity.pData, pictureName, orderNumber, date, orderStatus);			
 			}else 
 			{
 				DisplayUtil.toast(getActivity(), getString(R.string.ts_onfind_ft));
 			}
 			
-			sendPicture(getActivity(),OrderService.userEntity.getToken(), OrderService.userEntity.getName() , orderNumber , pictureData,date , orderStatus);
-//			System.out.println("res:" +res);
+			sendPicture(getActivity(),OrderService.userEntity.getToken(), OrderService.userEntity.getName() , orderNumber , CameraActivity.pData,date , orderStatus);
+			System.out.println("result_infoflag");
 		}
 		
 //		System.out.println("result called!");
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-//	{
-//		PictureDAO pictureDAO = new PictureDAO(getActivity());
-//		pictureDAO.addPicture(pictureEntity);
-//	}
-	
+
 
 	
-	public static  void sendPicture(final Context context , String token , String name ,String orderID ,byte[] data ,String date,String des)
+	public static  void sendPicture(final Context context , String token , String name ,final String orderID ,byte[] data ,String date,String des)
 	{
 
 		String url = context.getString(R.string.url) +"mobile/image/add";
@@ -418,15 +414,14 @@ public class InfoFlag extends Fragment implements OnItemClickListener {
 							
 							if (result.equals("成功"))
 							{
-								
+								PictureDAO pictureDAO = new PictureDAO(context);
+								pictureDAO.updatePictureStatusByOrderID(orderID, PictureEntity.STATUS_SENDED);
 							}
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
-//					loginDialog.dismiss();
-//					Toast.makeText(getApplicationContext(),userName +  "登录"+result, 4*1000).show();
 
 				}
 				@Override
@@ -436,6 +431,8 @@ public class InfoFlag extends Fragment implements OnItemClickListener {
 					// TODO Auto-generated method stub
 					super.onFailure(statusCode, headers, responseString, throwable);
 //					loginDialog.dismiss();
+					PictureDAO pictureDAO = new PictureDAO(context);
+					pictureDAO.updatePictureStatusByOrderID(orderID, PictureEntity.STATUS_EXCETION);
 					Log.v(TAG, "response:" + responseString);
 					
 				}
@@ -447,39 +444,106 @@ public class InfoFlag extends Fragment implements OnItemClickListener {
 					// TODO Auto-generated method stub
 //					loginDialog.dismiss();
 //					Toast.makeText(getApplicationContext(),getString(R.string.ts_login_faild), 4*1000).show();
+					PictureDAO pictureDAO = new PictureDAO(context);
+					pictureDAO.updatePictureStatusByOrderID(orderID, PictureEntity.STATUS_EXCETION);
 					super.onFailure(statusCode, headers, throwable, errorResponse);
 				}
 			});
 	}
+	private void obtainUserInfo()
+	{
+		String url = getString(R.string.url) +"/mobile/sync";
+		List<NameValuePair> dataList = new ArrayList<NameValuePair>();  
+		dataList.add(new BasicNameValuePair("action", "MobileSync"));
+		dataList.add(new BasicNameValuePair("employeeId",OrderService.userEntity.getName()));
+		dataList.add(new BasicNameValuePair("token", OrderService.userEntity.getToken()));
 
+		
+		
+		HttpEntity entity = null;
+		try
+		{
+			entity = new UrlEncodedFormEntity(dataList);
+		} catch (UnsupportedEncodingException e)
+		{
+			// TODO Auto-generated catch block
+			
+			e.printStackTrace();
+		}  
+		
+		// TODO Auto-generated method stub
+		AsyncHttpClient client = new AsyncHttpClient();
+		SSLSocketFactory sslSocketFactory = SSLSocketUtil.createSSLSocketFactory();
+		client.setSSLSocketFactory(sslSocketFactory);
+		client.setTimeout(TIMEOUT);
+		client.post(context, url, entity, null,  new JsonHttpResponseHandler()
+		{
+			
+			@Override
+			public void onStart() 
+			{
+				  loginDialog.show();
+	               loginDialog.setContentView(R.layout.dialog_single_ps);
+//               
+				super.onStart();
+			}
+			
+			@Override
+			public void onSuccess(int statusCode, Header[] headers,
+					JSONObject response) {
+				// TODO Auto-generated method stub
+				super.onSuccess(statusCode, headers, response);
+				if (CommonUtil.parserOrder(response, OrderService.orderEntitys)) 
+				{
+					if ( OrderService.orderEntitys.size() == 0)
+					{
+						DisplayUtil.setListEmptyView(context, ListView, context.getString(R.string.ts_no_order));
+					}
+					if (orderAdapter != null) 
+					{
+						orderAdapter.notifyDataSetChanged();
+					}
+					
+					Intent service = new Intent(context, OrderService.class);
+					context.startService(service);
+				}else
+				{
+					DisplayUtil.toast(context,getString(R.string.ts_data_exception));
+				}
+				loginDialog.dismiss();
+			}
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					String responseString, Throwable throwable) {
+				// TODO Auto-generated method stub
+				super.onFailure(statusCode, headers, responseString, throwable);
+				loginDialog.dismiss();
+				Toast.makeText(context,getString(R.string.ts_sync_failed), 4*1000).show();
+			}
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					Throwable throwable, JSONObject errorResponse) 
+			{
+				loginDialog.dismiss();
+				Toast.makeText(context,getString(R.string.ts_sync_failed), 4*1000).show();
+				super.onFailure(statusCode, headers, throwable, errorResponse);
+			}
+		});
+                // Do something with the response
+	}
 
-
-
-
-
-//	private boolean savePicture(byte[] data ,String name , String orderNumber , String date ,String des )
-//	{
-//		String cameraPath = CommonUtil.getSDCardPath() + "/" + getActivity().getString(R.string.root_file_name) + "/" +  getActivity().getString(R.string.camera_file);
-//		createCameraFile(cameraPath);
-//		String picturePath = cameraPath +"/"+name;
-//		System.out.println("picturePath:" + picturePath);
-//		CommonUtil.savePicture(picturePath, data);
-//		
-//		PictureEntity pictureEntity = new PictureEntity(0, OrderService.userEntity.getName(), orderNumber, picturePath, date, des, PictureEntity.STATUS_ONSEND, 100, 100);
-//		savePictureToDatabase(pictureEntity);
-//		
-//		return true;
-//	}
-//	private void createCameraFile(String cameraPath )
-//	{
-//		File file = new File(cameraPath);
-//		if (!file.exists()) {
-//			if (file.mkdirs())
-//			{
-//				
-//			}else {
-//				System.out.println("failed!!!!!!!!!!!!!!");
-//			}
-//		}
-//	}
+	public void onResume() {
+	    super.onResume();
+	    MobclickAgent.onPageStart("MainScreen"); //统计页面
+	}
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPageEnd("MainScreen"); 
+	}
+	@Override
+	public void onDestroy() {
+	
+		// TODO Auto-generated method stub
+		super.onDestroy();
+	}
 }

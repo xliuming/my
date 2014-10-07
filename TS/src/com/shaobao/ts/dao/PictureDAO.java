@@ -8,6 +8,7 @@ import org.w3c.dom.UserDataHandler;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.wifi.WifiConfiguration.Status;
 
 import com.shaobao.ts.entity.PictureEntity;
 import com.shaobao.ts.util.DataHelper;
@@ -99,7 +100,17 @@ public class PictureDAO extends DataHelper {
      }
 
 	  
-	  
+	 public int updatePictureStatusByOrderID(String orderID , String status)
+	 {
+		
+		 ContentValues values = new ContentValues();
+		 values.put(PictureEntity.P_STATUS, status);
+		 
+		 int id = db.update(PictureEntity.TABLE_NAME, values, PictureEntity.P_ORDER_ID + "="
+                 + orderID, null);
+//        Log. e("UpdateUserInfo", id + "");
+         return id;
+	 }
 	  
 	 public int delPicture(int id) 
      {

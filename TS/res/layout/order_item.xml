@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="60dip"
     android:descendantFocusability="blocksDescendants"
+    android:background="@drawable/setting_back"
     
     >
 	<TextView 

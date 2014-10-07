@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//src/main/java/com/huhu/controller/order/OrderController.java=UTF-8
+encoding//src/main/java/com/huhu/dao/DeskDAO.java=UTF-8
+encoding//src/main/java/com/huhu/model/food/FoodModel.java=UTF-8
+encoding//src/main/java/com/huhu/model/food/FoodSortModel.java=UTF-8
+encoding//src/main/java/com/huhu/model/food/SortGroupsModel.java=UTF-8
+encoding//src/main/java/com/huhu/model/mer/MerTypeModel.java=UTF-8
+encoding//src/main/java/com/huhu/service/FoodTypeService.java=UTF-8
+encoding//src/main/java/com/huhu/service/order/OrderService.java=UTF-8
+encoding//src/main/java/test/TestDAO.java=UTF-8
+encoding//src/main/webapp/WEB-INF/views/menu/menu.jsp=UTF-8
